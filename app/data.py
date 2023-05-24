@@ -8,18 +8,47 @@ from pymongo import MongoClient
 
 
 class Database:
+    load_dotenv()
+    database = MongoClient(getenv("DB_URL"), tlsCAFile=where())["Database"]
+
+    # query = {"name": "Action",
+    #          "email": "actionjackson@gmail.com",
+    #          "state": "Washington",
+    #          "city": "Seattle"}
+
+    def __init__(self, collection: str):
+        self.collection = self.database[collection]
+
+    # def test(self):
+    #     self.collection.insert_one(self.query)
+    #     print(list(self.collection.find({}, {"_id": False})))
+    #     self.collection.delete_many({})
+    #     print(list(self.collection.find({}, {"_id": False})))
 
     def seed(self, amount):
-        pass
+        # Generate random monster data using MonsterLab
+        monster = [Monster().to_dict() for _ in range(amount)]
+        return self.collection.insert_many(monster)
 
     def reset(self):
-        pass
+        # Deleting all documents in the collection
+        return self.collection.delete_many({})
 
     def count(self) -> int:
-        pass
+        # Getting the count of documents in the collection
+        return self.collection.count_documents({})
 
     def dataframe(self) -> DataFrame:
-        pass
+        return DataFrame(self.collection.find({}, {"_id": False}))
 
     def html_table(self) -> str:
-        pass
+        return self.dataframe().to_html()
+
+
+if __name__ == '__main__':
+    db = Database("monster")
+    db.seed(1000)
+    # db.reset()
+    print(db.count())  # To print count of documents
+    print(db.dataframe())
+    print(db.html_table())
