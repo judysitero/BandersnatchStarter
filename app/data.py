@@ -11,19 +11,8 @@ class Database:
     load_dotenv()
     database = MongoClient(getenv("DB_URL"), tlsCAFile=where())["Database"]
 
-    # query = {"name": "Action",
-    #          "email": "actionjackson@gmail.com",
-    #          "state": "Washington",
-    #          "city": "Seattle"}
-
     def __init__(self, collection: str):
         self.collection = self.database[collection]
-
-    # def test(self):
-    #     self.collection.insert_one(self.query)
-    #     print(list(self.collection.find({}, {"_id": False})))
-    #     self.collection.delete_many({})
-    #     print(list(self.collection.find({}, {"_id": False})))
 
     def seed(self, amount):
         # Generate random monster data using MonsterLab

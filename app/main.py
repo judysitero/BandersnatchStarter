@@ -1,9 +1,9 @@
-from base64 import b64decode
-import os
+from base64 import b64decode  # Used to encode binary data as printable text.
+import os  # is imported to handle operating system-related functionalities
 
 from Fortuna import random_int, random_float
 from MonsterLab import Monster
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request  # is imported to create a Flask web application.
 from pandas import DataFrame
 
 from app.data import Database
@@ -14,7 +14,9 @@ SPRINT = 1
 APP = Flask(__name__)
 
 
-@APP.route("/")
+@APP.route("/")  # home route specifies the URL endpoint ("/") that corresponds to the home page.
+#  The home() function is the view function for the home page. It returns the rendered template
+#  "home.html" with some context variables.
 def home():
     return render_template(
         "home.html",
@@ -24,7 +26,9 @@ def home():
     )
 
 
-@APP.route("/data")
+@APP.route("/data")  # data route specifies the URL endpoint ("/data") that corresponds to the data page.
+# The data() function is the view function for the data page. It returns the rendered template "data.html"
+# with some context variables.
 def data():
     if SPRINT < 1:
         return render_template("data.html")
@@ -51,6 +55,7 @@ def view():
         y=y_axis,
         target=target,
     ).to_json()
+    # "view.html" is returned with some context variables.
     return render_template(
         "view.html",
         options=options,
