@@ -10,7 +10,7 @@ from app.data import Database
 from app.graph import chart
 from app.machine import Machine
 
-SPRINT = 2
+SPRINT = 3
 APP = Flask(__name__)
 
 
@@ -72,7 +72,7 @@ def model():
     if SPRINT < 3:
         return render_template("model.html")
     db = Database("monster")
-    options = ["Level", "Health", "Energy", "Sanity", "Rarity"]
+    options = ["Level", "Health", "Energy", "Sanity", "Rarity"]  # This is a list of our headers/keys
     filepath = os.path.join("app", "model.joblib")
     if not os.path.exists(filepath):
         df = db.dataframe()
